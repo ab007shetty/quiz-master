@@ -2,37 +2,7 @@
 
 
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" type="image/png" href="assets/img/logo.png" />
-    <title>Online Quiz Management System</title>
-
-  <!--     Fonts and icons     -->
-  
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
-	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	
-	<link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css "/>
-	
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  
-  <link rel="stylesheet" href="assets/css/creativetim.min.css" type="text/css"> 
-
-  <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_b315629468470fd1230c5a1bec6c00575'
-    });
-</script>
-	
-
-</head>
-
+<?php require ("header.php");?>
 
 <?php
 
@@ -52,8 +22,6 @@ if (isset($_POST['studsu'])) {
         $gender1 = mysqli_real_escape_string($conn, $_POST['gender1']);
         $password1 = mysqli_real_escape_string($conn, $_POST['password1']);
         $cpassword1 = mysqli_real_escape_string($conn, $_POST['cpassword1']);
-        $password1 = crypt($password1,'rakeshmariyaplarrakesh');
-        $cpassword1 = crypt($cpassword1,'rakeshmariyaplarrakesh');
         if ($password1 == $cpassword1) {
             $sql = "insert into student (usn,name,mail,phno,dept,gender,DOB,pw) values('$usn1','$name1','$mail1','$phno1','$dept1','$gender1','$dob1','$password1')";
             if (mysqli_query($conn, $sql)) {
@@ -92,8 +60,6 @@ require 'sql.php';
         $gender2 = mysqli_real_escape_string($conn, $_POST['gender2']);
         $password2 = mysqli_real_escape_string($conn, $_POST['password2']);
         $cpassword2 = mysqli_real_escape_string($conn, $_POST['cpassword2']);
-        $password2 = crypt($password2,'rakeshmariyaplarrakesh');
-        $cpassword2 = crypt( $cpassword2,'rakeshmariyaplarrakesh');
         if ($password2 == $cpassword2) {
             $sql = "insert into staff (staffid,name,mail,phno,dept,gender,DOB,pw) values('$usn2','$name2','$mail2','$phno2','$dept2','$gender2','$dob2','$password2')";
             if (mysqli_query($conn, $sql)) {
@@ -187,14 +153,20 @@ require 'sql.php';
               </a>
             </li>
 		  
-		  <li class="nav-item">
-              <a href="login.php" class="nav-link">
-                <span class="text-white nav-link-inner--text"
+							  <li class="nav-item">
+			   <div class="dropdown show ">
+		  <a class="nav-link dropdown-toggle text-white " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                  <span class="text-white nav-link-inner--text"
                   ><i class="text-white fas fa-sign-in-alt"></i> Login</span
                 >
-              </a>
-            </li>
-		  
+		  </a>
+
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			<a class="dropdown-item" href="loginstud.php">Student</a>
+			<a class="dropdown-item" href="login.php">Staff</a>
+		  </div>
+		</div>
+			</li>
 
 
             <li class="nav-item">
@@ -276,7 +248,7 @@ require 'sql.php';
                 <label
                   for="name"
                   class="col-md-2 col-form-label text-white"
-                  >Full Name</label
+                  >Full Name </label
                 >
                 <div class="col-md-10">
                   <input
@@ -370,7 +342,7 @@ require 'sql.php';
 			  
 			  <div class="form-group row">
                 <label class="col-md-2 col-form-label text-white" for="dob2"
-                  >DOB</label
+                  >Date Of Joining</label
                 >
                 <div class="col-md-10">
                   <input
@@ -429,10 +401,12 @@ require 'sql.php';
                   <input
                     type="password"
                     name="password2"
-                    class="validate form-control"
+                    class=" form-control"
                     required
                     placeholder="**********"
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   />
+				   <p>  <small class="text-white"> Use minimum 8 Characters with atleast 1 numericals, Capital letter and Special Character.  </small></p>
                 </div>
               </div>
 			  
@@ -444,10 +418,12 @@ require 'sql.php';
                   <input
                     type="password"
                     name="cpassword2"
-                    class="validate form-control"
+                    class=" form-control"
                     required
                     placeholder="**********"
+					pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                   />
+				   <p>  <small class="text-white"> Enter the same password as before, for verification. </small></p>
                 </div>
               </div>
 
@@ -644,10 +620,14 @@ require 'sql.php';
                   <input
                     type="password"
                     name="password1"
-                    class="validate form-control"
+                    class=" form-control"
                     required
                     placeholder="**********"
+										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+
                   />
+				  				   <p>  <small class="text-white"> Use minimum 8 Characters with atleast 1 numericals, Capital letter and Special Character.  </small></p>
+
                 </div>
               </div>
 			  
@@ -659,10 +639,14 @@ require 'sql.php';
                   <input
                     type="password"
                     name="cpassword1"
-                    class="validate form-control"
+                    class=" form-control"
                     required
                     placeholder="**********"
+										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+
                   />
+				  				   <p>  <small class="text-white"> Enter the same password as before, for verification. </small></p>
+
                 </div>
               </div>
 

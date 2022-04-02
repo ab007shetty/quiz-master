@@ -2,6 +2,6 @@
 // replace *** with your database credentials
 $host='localhost';
 $user='root';
-$project='project';
+$project='quiz';
 $ps='';
 ?>

@@ -28,7 +28,7 @@ $success = "";
 $error = "";
 $name = $message = $email = "";
 $errors = array('name' => '', 'email' => '', 'message' => '');
-$mymail = 'parikshithshetty59@gmail.com';
+$mymail = 'prathikwwf@gmail.com';
 $myname = 'Quiz Master';
 
 
@@ -104,34 +104,8 @@ function SanitizeString($var)
 
 <!DOCTYPE html>
 <html>
+<?php require ("header.php");?>
 
-<head>
-<meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" type="image/png" href="assets/img/logo.png" />
-    <title>Online Quiz Management System</title>
-
-  <!--     Fonts and icons     -->
-  
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
-	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	
-	<link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css "/>
-	
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-
-  <link rel="stylesheet" href="assets/css/creativetim.min.css" type="text/css">
-  
-  <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_b315629468470fd1230c5a1bec6c00575'
-    });
-</script>
 
     <style>
         .error {
@@ -148,7 +122,6 @@ function SanitizeString($var)
             text-align: center;
         }
     </style>
-</head>
 
 
 
@@ -221,14 +194,20 @@ function SanitizeString($var)
               </a>
             </li>
 		  
-		  <li class="nav-item">
-              <a href="login.php" class="nav-link">
-                <span class="text-white nav-link-inner--text"
+							  <li class="nav-item">
+			   <div class="dropdown show ">
+		  <a class="nav-link dropdown-toggle text-white " href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		                  <span class="text-white nav-link-inner--text"
                   ><i class="text-white fas fa-sign-in-alt"></i> Login</span
                 >
-              </a>
-            </li>
-		  
+		  </a>
+
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			<a class="dropdown-item" href="loginstud.php">Student</a>
+			<a class="dropdown-item" href="login.php">Staff</a>
+		  </div>
+		</div>
+			</li>
 
 
             <li class="nav-item">
@@ -346,21 +325,21 @@ function SanitizeString($var)
                       </button>
                     </div>
 
-                    <div class="offset-md-4 text-justify-content-end">
+                    <div class="offset-md-3 text-justify-content-end">
                       <div class="btn-group" role="group">
                         <a
                           role="button"
-                          class="btn btn-primary"
-                          href="tel:+85212345678"
+                          class="btn btn-info"
+                          href="tel:+918317308812"
                           ><i class="fa fa-phone"></i> Call</a
                         >
-                        <a role="button" class="btn btn-info" href="#"
-                          ><i class="fa fa-skype"></i> Skype</a
+                        <a role="button" class="btn btn-success" target="_blank" href="http://wa.me/916366004459?text=Message%20From%20Quiz%20Master." 
+                          ><i class="fa fa-whatsapp"></i> Whatsapp</a
                         >
                         <a
                           role="button"
-                          class="btn btn-success"
-                          href="mailto:parikshithshetty59@gmail"
+                          class="btn btn-primary"
+                          href="mailto:parikshithsshetty59@gmail"
                           ><i class="fa fa-envelope-o"></i> Email</a
                         >
                       </div>

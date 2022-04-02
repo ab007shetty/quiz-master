@@ -1,36 +1,6 @@
 <html>
 
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" type="image/png" href="assets/img/logo.png" />
-    <title>Online Quiz Management System</title>
-
-  <!--     Fonts and icons     -->
-  
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
-	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	
-	<link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css "/>
-	
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  
-
-  <link rel="stylesheet" href="assets/css/creativetim.min.css" type="text/css">
-  
-  <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_b315629468470fd1230c5a1bec6c00575'
-    });
-</script>
-
-</head>
+<?php require ("header.php");?>
 
 <?php
 session_start();
@@ -38,16 +8,15 @@ require_once 'sql.php';
                 $conn = mysqli_connect($host, $user, $ps, $project);if (!$conn) {
     echo "<script>alert(\"Database error retry after some time !\")</script>";
 } else {
-    $type1 = $_SESSION["type"];
-    $username1 = $_SESSION["username"];
-    $sql = "select * from " . $type1 . " where mail='{$username1}'";
+    $staffid = $_SESSION["staffid"];
+    $sql = "select * from staff where staffid='{$staffid}'";
     $res =   mysqli_query($conn, $sql);
     if ($res == true) {
-        global $dbmail, $dbpw, $dbusn;
+        global $dbstaffid, $dbpw;
         while ($row = mysqli_fetch_array($res)) {
-            $dbmail = $row['mail'];
+            $dbstaffid = $row['staffid'];
             $dbname = $row['name'];
-            $dbusn = $row['staffid'];
+			$dbmail = $row['mail'];
             $dbphno = $row['phno'];
             $dbgender = $row['gender'];
             $dbdob = $row['DOB'];
@@ -57,7 +26,7 @@ require_once 'sql.php';
     if (isset($_POST['submit'])) {
         $qname = strtolower($_POST['quizname']);
         $_SESSION["qname"]=$qname;
-        $sql1 = "insert into quiz(quizname,mail) values('$qname','$username1')";
+        $sql1 = "insert into quiz(quizname,staffid) values('$qname','$staffid')";
         $res1 = mysqli_query($conn, $sql1);
         if ($res1 == true) {
             $sql = "select quizid from quiz where quizname='" . $qname . "';";
@@ -230,8 +199,7 @@ require_once 'sql.php';
 			  
   <div class="nav nav-tabs nav-fill bg-gradient-default" id="nav-tab" role="tablist">
     <a class="nav-item nav-link active font-weight-bold text-success" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Add Quiz</a>
-    <a class="nav-item nav-link font-weight-bold text-primary" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">View Quiz</a>
-    <a class="nav-item nav-link font-weight-bold text-danger" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Delete Quiz</a>
+  
   </div>
                   
                 		  
@@ -276,86 +244,7 @@ require_once 'sql.php';
            </div>
        </div> 
 	   
-	   
-	   
-	   <div class="tab-pane fade show " id="nav-profile" role="tabpanel" aria-labelledby="nav-home-tab">
-           <div class="card card-body bg-gradient-primary">
-			<h1 class="text-white">View Quiz</h1>
-					
-                <form  method="post">     
-                        
-					<div class="form-group row">
-                    <label for="name" class="col-md-3 col-form-label"
-                      ><h6 class="text-white font-weight-bold">Quiz ID</h6>
-                    </label>
-                    <div class="col-md-9">
-                      <input
-                        type="number"
-                        class="form-control"
-                        required
-                        id="quizid"
-                        name="quizid"
-                        placeholder="Enter Quiz ID"
-						required"
-                      />
-                    </div>
-                  </div>
-				  
-					 <div class="form-group row">
-                    <div class="offset-md-3 col-md-2">
-                      <button
-                        type="submit"
-                        class="btn btn-info text-dark"
-						name="submit2" id="submit2" value="submit"
-                      >
-                        Submit
-                      </button>
-                    </div>
-					</div>
-             </form>
-				
-           </div>
-       </div> 
-	   
-	   
-	   <div class="tab-pane fade show " id="nav-contact" role="tabpanel" aria-labelledby="nav-home-tab">
-           <div class="card card-body bg-gradient-danger">
-			<h1 class="text-white">Delete Quiz</h1>
-					
-                <form  method="post">     
-                        
-					<div class="form-group row">
-                    <label for="name" class="col-md-3 col-form-label"
-                      ><h6 class="text-white font-weight-bold">Quiz ID</h6>
-                    </label>
-                    <div class="col-md-9">
-                      <input
-                        type="number"
-                        class="form-control"
-                        required
-                        id="quizid"
-                        name="quizid"
-                        placeholder="Enter Quiz ID"
-						required"
-                      />
-                    </div>
-                  </div>
-				  
-					 <div class="form-group row">
-                    <div class="offset-md-3 col-md-2">
-                      <button
-                        type="submit"
-                        class="btn btn-info text-dark"
-						name="submit1" id="submit1" value="submit"
-                      >
-                        Submit
-                      </button>
-                    </div>
-					</div>
-             </form>
-				
-           </div>
-       </div> 
+
 
 	</div>
 	

@@ -1,31 +1,30 @@
 <?php session_start(); ?>
 <html>
 
-
-
 <?php require ("header.php");?>
+
 
 
 <?php
         if (isset($_POST['login'])) {
-            if (  isset($_POST['staffid']) && isset($_POST['pass'])) {        require_once 'sql.php';
+            if (  isset($_POST['usn']) && isset($_POST['pass'])) {        require_once 'sql.php';
                 $conn = mysqli_connect($host, $user, $ps, $project);if (!$conn) {
                     echo "<script>alert(\"Database error retry after some time !\")</script>";
                 }
-                $staffid = mysqli_real_escape_string($conn, $_POST['staffid']);
+                $usn = mysqli_real_escape_string($conn, $_POST['usn']);
                 $password = mysqli_real_escape_string($conn, $_POST['pass']);
-                $sql = "select * from staff where staffid='{$staffid}'";
+                $sql = "select * from student where usn='{$usn}'";
                 $res =   mysqli_query($conn, $sql);
                 if ($res == true) {
-                    global $dbstaffid, $dbpw;
+                    global $dbusn, $dbpw;
                     while ($row = mysqli_fetch_array($res)) {
                         $dbpw = $row['pw'];
-                        $dbstaffid = $row['staffid'];
+                        $dbusn = $row['usn'];
                         $_SESSION["name"] = $row['name'];
-                        $_SESSION["staffid"] = $dbstaffid;
+                        $_SESSION["usn"] = $dbusn;
                     }
                     if ($dbpw === $password) {
-                            header("Location: homestaff.php");
+                            header("Location: homestud.php");
                         }
                      else  {
                         echo "<script>alert('username or password is wrong');</script>";
@@ -120,6 +119,7 @@
 		  </div>
 		</div>
 			</li>
+		  
 
 
             <li class="nav-item">
@@ -153,14 +153,14 @@
 
 <div class="row">
           <div class="col-md-8 mx-auto text-center">
-            <span class="badge badge-success badge-pill mb-3">Staff Login</span>
+            <span class="badge badge-success badge-pill mb-3">Student login </span>
           </div>
         </div>
 		
 <div class="row row-content align-text-center text-white ">
 	<div class="col-12 offset-sm-2 col-sm-8 offset-sm-2 ">
 
-                <div class="card card-body  bg-dark">
+                <div class="card card-body  bg-gradient-primary">
 
 <div class="col-12  ">
 
@@ -178,15 +178,15 @@
 
               <div class="form-group row">
                 <label class="col-md-2 col-form-label text-white" for="email"
-                  >Staff ID</label
+                  >USN</label
                 >
                 <div class="col-md-10">
                   <input
                     autocomplete="new-password"
                     class="white-text validate form-control"
-                    placeholder="Staff ID"
+                    placeholder="USN"
                     id="email"
-                    name="staffid"
+                    name="usn"
                     type="text"
                     class="validate"
                   />
@@ -220,7 +220,7 @@
                 </div>
               </div>
 			  
-      
+			                  
 
             </form>
 

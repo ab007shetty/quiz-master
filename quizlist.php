@@ -1,36 +1,7 @@
 <html>
 
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" type="image/png" href="assets/img/logo.png" />
-    <title>Online Quiz Management System</title>
-
-  <!--     Fonts and icons     -->
-  
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
-	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	
-	<link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css "/>
-	
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  
-
-  <link rel="stylesheet" href="assets/css/creativetim.min.css" type="text/css">
-  
-  <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_b315629468470fd1230c5a1bec6c00575'
-    });
-</script>
-
-</head>
+<?php require ("header.php");?>
 
 <?php
 session_start();
@@ -38,16 +9,15 @@ require_once 'sql.php';
                 $conn = mysqli_connect($host, $user, $ps, $project);if (!$conn) {
     echo "<script>alert(\"Database error retry after some time !\")</script>";
 } else {
-    $type1 = $_SESSION["type"];
-    $username1 = $_SESSION["username"];
-    $sql = "select * from " . $type1 . " where mail='{$username1}'";
+    $staffid = $_SESSION["staffid"];
+    $sql = "select * from staff where staffid='{$staffid}'";
     $res =   mysqli_query($conn, $sql);
     if ($res == true) {
-        global $dbmail, $dbpw, $dbusn;
+        global $dbstaffid, $dbpw;
         while ($row = mysqli_fetch_array($res)) {
-            $dbmail = $row['mail'];
+            $dbstaffid = $row['staffid'];
             $dbname = $row['name'];
-            $dbusn = $row['staffid'];
+			$dbmail = $row['mail'];
             $dbphno = $row['phno'];
             $dbgender = $row['gender'];
             $dbdob = $row['DOB'];
@@ -56,7 +26,6 @@ require_once 'sql.php';
     }
 }
 ?>
-
  <body class="bg-white" id="top">
     <!-- Navbar -->
     <nav
@@ -193,24 +162,60 @@ require_once 'sql.php';
 			   <div class="col-12 mx-auto text-center">
             <span class="badge badge-warning badge-pill mb-3">Quiz List</span>
           </div>
+		  
+		  
+		      <table id="tabledata" class=" table table-striped table-hover table-bordered  text-center ">
 
-            <?php 
-            $sql ="select * from quiz where mail='{$username1}'";
+            <thead class="font-weight-bold">
+                      <tr >
+
+                <td >Quiz ID</td>
+                <td> Quiz Title </td>
+                <td> Created On </td>
+                <td>  View </td>
+
+				<td> Delete </td>
+				        </tr>
+
+            </thead>
+
+		<tbody >
+		
+		
+		  				        <?php
+
+
+  $sql ="select * from quiz where staffid='{$staffid}'";
             $res=mysqli_query($conn,$sql);
-            if($res)
-            {
-                echo "<table id=\"sc\" class=\"table table-striped table-hover table-bordered  text-center \">
-				<thead class=\" font-weight-bold \"><tr>
-				<td>Quiz ID</td>
-				<td>Quiz Title</td>
-				<td>Created On</td>
-				</tr></thead>";
-                while ($row = mysqli_fetch_assoc($res)) {                
-                    echo "<tr><td>".$row["quizid"]."</td><td>".$row["quizname"]."</td><td>".$row["date_created"]."</td></tr>"; 
-                }
-                echo "</table>";
-            }
-            ?>
+       
+while ($row = mysqli_fetch_array($res)) {                
+             
+			$id=$row['quizid'];
+			$name=$row['quizname'];
+			$date=$row['date_created'];
+			
+        ?>
+		
+			     <tr class="text-center">
+              
+                <td data-label="Quiz ID"> <?php echo $id ?> </td>
+                <td data-label="Quiz Title"> <?php echo $name  ?> </td>
+                <td data-label="Created On"> <?php echo $date  ?> </td>
+                
+        <td data-label="Profile"> <button class="btn btn-info btn-sm" > <a href="viewq.php?qid=<?php echo $id ?>" class="nav-link text-white"> View </a> </button> </td>
+	
+       <td data-label="delete"> <button class="btn btn-sm btn-danger" > <a href="delete.php?id=<?php echo $id ?>"  class=" nav-link text-white" data-toggle="tooltip">Delete</a> </button> </td>
+
+            </tr>
+
+							<?php
+					
+					
+					}
+				?>
+			</tbody>
+			
+    </table>
      
              </div>
                 </div>

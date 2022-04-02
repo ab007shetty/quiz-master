@@ -1,61 +1,31 @@
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="icon" type="image/png" href="assets/img/logo.png" />
-    <title>Online Quiz Management System</title>
 
-  <!--     Fonts and icons     -->
-  
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" 
-	integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-	
-	<link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css "/>
-	
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  
-
-  <link rel="stylesheet" href="assets/css/creativetim.min.css" type="text/css">
-  
-  <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_b315629468470fd1230c5a1bec6c00575'
-    });
-</script>
-
-</head>
+<?php require ("header.php");?>
 <?php
 session_start();
 require_once 'sql.php';
                 $conn = mysqli_connect($host, $user, $ps, $project);if (!$conn) {
     echo "<script>alert(\"Database error retry after some time !\")</script>";
+} else {
+    $usn = $_SESSION["usn"];
+    $sql = "select * from student where usn='{$usn}'";
+    $res =   mysqli_query($conn, $sql);
+    if ($res == true) {
+        global $dbusn, $dbpw;
+        while ($row = mysqli_fetch_array($res)) {
+            $dbusn = $row['usn'];
+            $dbname = $row['name'];
+			$dbmail = $row['mail'];
+            $dbphno = $row['phno'];
+            $dbgender = $row['gender'];
+            $dbdob = $row['DOB'];
+            $dbdept = $row['dept'];
+        }
+    }
 }
 ?>
 
-<?php
-        $type1 = $_SESSION["type"];
-        $username1 = $_SESSION["username"];
-        $sql = "select * from " . $type1 . " where mail='{$username1}'";
-        $res =   mysqli_query($conn, $sql);
-        if ($res == true) {
-            global $dbmail, $dbpw;
-            while ($row = mysqli_fetch_array($res)) {
-                $dbmail = $row['mail'];
-                $dbname = $row['name'];
-                $dbusn = $row['usn'];
-                $dbphno = $row['phno'];
-                $dbgender = $row['gender'];
-                $dbdob = $row['DOB'];
-                $dbdept = $row['dept'];
-            }
-        }
-?>
 
   <body class="bg-white" id="top">
     <!-- Navbar -->
@@ -193,7 +163,7 @@ require_once 'sql.php';
             <span class="badge badge-default badge-pill mb-3">Score Card</span>
           </div>
 			  <?php 
-            $sql ="select * from score,quiz where score.mail='{$username1}' and score.quizid=quiz.quizid";
+            $sql ="select * from score,quiz where score.usn='{$usn}' and score.quizid=quiz.quizid";
             $res=mysqli_query($conn,$sql);
             if($res)
             {
