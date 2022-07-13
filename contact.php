@@ -21,7 +21,7 @@ $mail->SMTPSecure = "ssl";
 $mail->Port       = 465;
 $mail->Host       = "smtp.gmail.com";
 $mail->Username   = "eclassroom1999@gmail.com";
-$mail->Password   = "mloquiqighoyiytq";
+$mail->Password   = "dmcgocrdifnyjmbw";
 
 
 $success = "";
