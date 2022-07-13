@@ -28,7 +28,7 @@ $success = "";
 $error = "";
 $name = $message = $email = "";
 $errors = array('name' => '', 'email' => '', 'message' => '');
-$mymail = 'prathikwwf@gmail.com';
+$mymail = 'ab007shetty@gmail.com';
 $myname = 'Quiz Master';
 
 
